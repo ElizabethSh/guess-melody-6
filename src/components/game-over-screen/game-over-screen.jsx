@@ -1,9 +1,10 @@
 import React from 'react';
+import {useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import {resetGame} from '../../store/action';
 
-const GameOverScreen = ({onReplayButtonClick, resetGame}) => {
+const GameOverScreen = ({onReplayButtonClick}) => {
+  const dispatch = useDispatch();
   return (
     <section className="result">
       <div className="result__logo">
@@ -13,7 +14,7 @@ const GameOverScreen = ({onReplayButtonClick, resetGame}) => {
       <p className="result__total result__total--fail">У вас закончились все попытки. Ничего, повезёт в следующий раз!</p>
       <button
         onClick={() => {
-          resetGame();
+          dispatch(resetGame());
           onReplayButtonClick();
         }}
         className="replay"
@@ -27,15 +28,6 @@ const GameOverScreen = ({onReplayButtonClick, resetGame}) => {
 
 GameOverScreen.propTypes = {
   onReplayButtonClick: PropTypes.func.isRequired,
-  resetGame: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  resetGame() {
-    dispatch(ActionCreator.resetGame());
-  },
-});
-
-export {GameOverScreen};
-
-export default connect(null, mapDispatchToProps)(GameOverScreen);
+export default GameOverScreen;
